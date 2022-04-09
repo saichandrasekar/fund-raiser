@@ -16,21 +16,28 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+
 import { LayoutModule } from '@angular/cdk/layout';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		LoginComponent,
-		DashboardComponent
+		SignupComponent,
+		DashboardComponent,
+  SignupComponent
 	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
-		RouterModule.forRoot([
+		RouterModule.forRoot([			
 			{ path: 'launch', component: LoginComponent },
+			{ path: 'signup', component: SignupComponent },
 			{ path: 'home', component: DashboardComponent },
+			{ path: '**', component: LoginComponent },
 		]),
 		FormsModule,
 		ReactiveFormsModule,
@@ -42,6 +49,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 		MatFormFieldModule,
 		MatInputModule,
 		MatDividerModule,
+		MatSelectModule,
 		LayoutModule,
 	],
 	providers: [],

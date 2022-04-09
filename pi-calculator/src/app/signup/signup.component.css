@@ -1,0 +1,24 @@
+.main-container {	
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.example-card {
+  max-width: 800px;
+}
+
+
+.example-form {
+  min-width: 600px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+section {
+  display: table;
+}

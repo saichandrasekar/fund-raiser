@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -18,7 +19,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class LoginComponent implements OnInit {
 
-	constructor() { }
+	constructor(private route: ActivatedRoute,
+    private router: Router ) { }
 
 	ngOnInit(): void {
 	}	
@@ -35,8 +37,6 @@ export class LoginComponent implements OnInit {
 		console.log('signIn');
 	}
 	
-	public signUp(){
-		console.log('signUp');
-	}
+
 
 }
