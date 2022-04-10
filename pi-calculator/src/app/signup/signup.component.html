@@ -5,17 +5,17 @@
 			<mat-card class="example-card"> <mat-card-header>
 
 			<mat-card-title>Create a New Account</mat-card-title> <mat-card-subtitle>Enter
-			you details</mat-card-subtitle> </mat-card-header> <mat-card-content> <mat-form-field
+			your details</mat-card-subtitle> </mat-card-header> <mat-card-content> <mat-form-field
 				class="example-full-width" appearance="fill"> <mat-label>Name</mat-label>
 			<input type="text" matInput placeholder="Pat Smith"
 				formControlName="name"> <mat-error *ngIf="false">
-			Name is required</mat-error> </mat-form-field> <mat-form-field appearance="fill">
+			Name is required</mat-error> </mat-form-field> <mat-form-field appearance="fill" class="example-full-width">
 			<mat-label>Role</mat-label> <select matNativeControl required
 				formControlName="role">
 				<option value=""></option>
-				<option value="PRODUCT_OWNER">Product Owner</option>
+				<option value="PROJECT_OWNER">Product Owner</option>
 				<option value="INVESTOR">Investor</option>
-				<option value="Admin">Admin</option>
+				<option value="ADMIN">Admin</option>
 			</select> </mat-form-field> <mat-form-field class="example-full-width" appearance="fill">
 			<mat-label>Email</mat-label> <input type="text" matInput
 				placeholder="ex. pat@example.com" formControlName="email"> <mat-error

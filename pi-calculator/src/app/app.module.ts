@@ -20,10 +20,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { LayoutModule } from '@angular/cdk/layout';
 import { SignupComponent } from './signup/signup.component';
 import { ProjectComponent } from './project/project.component';
+
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 	declarations: [
@@ -36,6 +39,7 @@ import { ProjectComponent } from './project/project.component';
 	],
 	imports: [
 		BrowserModule,
+		HttpClientModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		RouterModule.forRoot([
@@ -59,6 +63,7 @@ import { ProjectComponent } from './project/project.component';
 		MatToolbarModule,
 		MatTableModule,
 		MatPaginatorModule,
+		MatSnackBarModule,
 		LayoutModule,
 	],
 	providers: [],

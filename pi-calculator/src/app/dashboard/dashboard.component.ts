@@ -1,52 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+
+import { Project } from '../models/project';
+
+import { User } from '../models/user';
 
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {MatTable} from '@angular/material/table';
+import { MatTable } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router, ActivatedRoute } from '@angular/router';
 
-export interface UserData {
-	id: string;
-	name: string;
-	progress: string;
-	fruit: string;
-}
+import { ProjectService } from '../services/project.service';
 
-/** Constants used to fill up our data base. */
-const FRUITS: string[] = [
-	'blueberry',
-	'lychee',
-	'kiwi',
-	'mango',
-	'peach',
-	'lime',
-	'pomegranate',
-	'pineapple',
-];
-const NAMES: string[] = [
-	'Maia',
-	'Asher',
-	'Olivia',
-	'Atticus',
-	'Amelia',
-	'Jack',
-	'Charlotte',
-	'Theodore',
-	'Isla',
-	'Oliver',
-	'Isabella',
-	'Jasper',
-	'Cora',
-	'Levi',
-	'Violet',
-	'Arthur',
-	'Mia',
-	'Thomas',
-	'Elizabeth',
-];
+import { UserService } from '../services/user.service';
 
 
 @Component({
@@ -54,44 +23,57 @@ const NAMES: string[] = [
 	templateUrl: './dashboard.component.html',
 	styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements AfterViewInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
 	/** Based on the screen size, switch from standard to one column per row */
 	cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
 		map(({ matches }) => {
 			if (matches) {
 				return [
-					{ title: 'Card 1', cols: 1, rows: 1 },
-					{ title: 'Card 2', cols: 1, rows: 1 },
-					{ title: 'Card 3', cols: 1, rows: 1 },
-					{ title: 'Card 4', cols: 1, rows: 1 }
+					{ title: 'Review Project Terms', cols: 1, rows: 1, content: 'Display PI Calculations' },
+					{ title: 'Supplies', cols: 1, rows: 1, content: 'List of Supplies' },
+					{ title: 'Investment Breakup', cols: 1, rows: 1, content: 'Bar chart for breakup' },
+					{ title: 'Project Metrics', cols: 1, rows: 1, content: 'Key items' },
 				];
 			}
 
 			return [
-				{ title: 'Card 1', cols: 2, rows: 1 },
-				{ title: 'Card 2', cols: 1, rows: 1 },
-				{ title: 'Card 3', cols: 1, rows: 2 },
-				{ title: 'Card 4', cols: 1, rows: 1 }
+				{ title: 'Review Project Terms', cols: 2, rows: 1, content: 'Display PI Calculations' },
+				{ title: 'Supplies', cols: 1, rows: 1, content: 'List of Supplies' },
+				{ title: 'Investment Breakup', cols: 1, rows: 2, content: 'Bar chart for breakup' },
+				{ title: 'Project Metrics', cols: 1, rows: 1, content: 'Key items' },
 			];
 		})
 	);
 
-	//constructor(private breakpointObserver: BreakpointObserver) {}
+	displayedColumns: string[] = ['name', 'type', 'status', 'duration'];
+	dataSource: MatTableDataSource<Project>;
 
-
-	displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
-	dataSource: MatTableDataSource<UserData>;
-
-	@ViewChild(MatTable) table: MatTable<UserData>;
+	@ViewChild(MatTable) table: MatTable<Project>;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
 
-	constructor(private breakpointObserver: BreakpointObserver) {
-		// Create 100 users
-		const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
+	constructor(private route: ActivatedRoute,
+		private router: Router, private userService: UserService, private projectService: ProjectService, private breakpointObserver: BreakpointObserver) {
 
-		// Assign the data to the data source for the table to render
-		this.dataSource = new MatTableDataSource(users);
+
+	}
+
+
+	user: User | null = null;
+
+	ngOnInit(): void {
+		this.user = this.userService.getLoggedInUser();
+		if (this.user == null) {
+			this.router.navigate(['/launch']);
+		} else {			
+			let projects = this.projectService.getProjects(this.user!);
+			if (projects == null) {
+				projects = [];
+			}
+			// Assign the data to the data source for the table to render
+			this.dataSource = new MatTableDataSource(projects);
+		}
+
 	}
 
 	ngAfterViewInit() {
@@ -108,19 +90,10 @@ export class DashboardComponent implements AfterViewInit {
 		}
 	}
 
-	addData() {		
-		this.dataSource.data.push(createNewUser(Math.floor(Math.random() * 3)));
-		this.table.renderRows();
-		
-		if (this.dataSource.paginator) {
-			this.dataSource.paginator.firstPage();
-		}
-	}
-
 	removeData() {
 		this.dataSource.data.pop();
 		this.table.renderRows();
-		
+
 		if (this.dataSource.paginator) {
 			this.dataSource.paginator.firstPage();
 		}
@@ -129,18 +102,3 @@ export class DashboardComponent implements AfterViewInit {
 }
 
 
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-	const name =
-		NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-		' ' +
-		NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-		'.';
-
-	return {
-		id: id.toString(),
-		name: name,
-		progress: Math.round(Math.random() * 100).toString(),
-		fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
-	};
-}

@@ -4,6 +4,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { User } from '../models/user';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { UserService } from '../services/user.service';
+
 @Component({
 	selector: 'app-signup',
 	templateUrl: './signup.component.html',
@@ -11,7 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class SignupComponent implements OnInit {
 
-	constructor(private fb: FormBuilder, private route: ActivatedRoute,
+	constructor(private userService: UserService, private fb: FormBuilder, private route: ActivatedRoute,
     private router: Router) { }
 
 	user: User = {
@@ -31,9 +33,14 @@ export class SignupComponent implements OnInit {
 	});
 
 
-	public createUser() {		
-		console.log(this.signUpForm.value);
-		this.router.navigate(['/home']);
+	public createUser() {
+		let newUser = this.userService.createUser(this.signUpForm.value);
+		if(newUser==null){
+			
+		}else if(newUser!.id!=null){
+			this.userService.setLoggedInUser(newUser);
+			this.router.navigate(['/home']);
+		}		
 	}
 
 }
