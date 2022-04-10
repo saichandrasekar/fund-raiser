@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
 	matcher = new MyErrorStateMatcher();
 	
 	public signIn(){
-		console.log('signIn');
+		this.router.navigate(['/home']);
 	}
 	
 

@@ -16,10 +16,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 import { LayoutModule } from '@angular/cdk/layout';
 import { SignupComponent } from './signup/signup.component';
+import { ProjectComponent } from './project/project.component';
 
 @NgModule({
 	declarations: [
@@ -27,16 +31,18 @@ import { SignupComponent } from './signup/signup.component';
 		LoginComponent,
 		SignupComponent,
 		DashboardComponent,
-  SignupComponent
+		SignupComponent,
+		ProjectComponent
 	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
-		RouterModule.forRoot([			
+		RouterModule.forRoot([
 			{ path: 'launch', component: LoginComponent },
 			{ path: 'signup', component: SignupComponent },
 			{ path: 'home', component: DashboardComponent },
+			{ path: 'projects', component: ProjectComponent },
 			{ path: '**', component: LoginComponent },
 		]),
 		FormsModule,
@@ -50,6 +56,9 @@ import { SignupComponent } from './signup/signup.component';
 		MatInputModule,
 		MatDividerModule,
 		MatSelectModule,
+		MatToolbarModule,
+		MatTableModule,
+		MatPaginatorModule,
 		LayoutModule,
 	],
 	providers: [],

@@ -1,21 +1,53 @@
 .grid-container {
-  margin: 20px;
+	margin: 20px;
 }
 
 .dashboard-card {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	right: 15px;
+	bottom: 15px;
 }
 
 .more-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
+	position: absolute;
+	top: 5px;
+	right: 10px;
 }
 
 .dashboard-card-content {
-  text-align: center;
+	text-align: center;
+}
+
+.example-spacer {
+	flex: 1 1 auto;
+}
+
+table {
+	width: 100%;
+}
+
+.mat-form-field {
+	font-size: 14px;
+	width: 100%;
+}
+
+td, th {
+	width: 25%;
+}
+
+.app-main-scroll {
+	overflow-y: scroll;
+	height: 360px;
+}
+
+.demo-button-container {
+	text-align: left;
+	padding-bottom: 5px;
+	padding-top: 10px;
+}
+
+.demo-button+.demo-button {
+	margin-left: 8px;
 }
